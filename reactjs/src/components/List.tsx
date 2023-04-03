@@ -1,19 +1,15 @@
 import {TextField} from "@mui/material";
-import {useState} from "react";
 import {Station} from "../entities/Station";
 import useVeloData from "../hooks/useVeloData";
 import "./../media/css/stations-list.css"
 
 export default function List() {
-    const {network} = useVeloData()
-    const [filter, setFilter] = useState("")
+    const {stations, filter, setFilter} = useVeloData()
 
     return <>
         <TextField fullWidth label={"Search"} value={filter} onChange={e => setFilter(e.target.value)} />
-        <div style={{height: "400px", overflowY: "auto"}}>
-            {network
-                .stations
-                .filter(station => station.name.toLowerCase().includes(filter.toLowerCase()))
+        <div className={"stationsList"}>
+            {stations
                 .map(station => <StationCard key={station.id} station={station} />)}
         </div>
     </>

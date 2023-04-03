@@ -1,18 +1,29 @@
 import {createContext, useContext, useState} from "react";
-import {defaultNetwork, Network} from "../entities/Network";
+import {Network} from "../entities/Network";
 import useGetSingle from "./useGetSingle";
 import useInterval from "./useInterval";
 import {LatLng} from "leaflet";
 import {Station} from "../entities/Station";
 
 const VeloContext = createContext<{
-    network : Network,
+    stations : Station[],
     selectedStation: Station|null,
     setSelectedStation: (val:Station) => void,
     setCenter: (val:LatLng) => void,
     center: LatLng,
-    zoom: number
-}>({network: defaultNetwork, selectedStation: null, setSelectedStation: () => {}, setCenter: () => {}, center: new LatLng(0,0), zoom: 13})
+    zoom: number,
+    filter: string,
+    setFilter: (val:string) => void
+}>({
+    stations: [],
+    selectedStation: null,
+    setSelectedStation: () => {},
+    setCenter: () => {},
+    center: new LatLng(0,0),
+    zoom: 13,
+    filter: "",
+    setFilter: () => {}
+})
 
 export default function useVeloData() {
     return useContext(VeloContext)
@@ -24,6 +35,7 @@ export function VeloDataProvider(props:{children:JSX.Element}) {
     const [selectedStation, setSelectedStation] = useState<Station|null>(null)
     const [center, setCenter] = useState(new LatLng(51.214468, 4.412213))
     const [zoom, setZoom] = useState(14)
+    const [filter, setFilter] = useState("")
 
     function setSelectedStationHandler(station:Station) {
         console.log("clicked station")
@@ -41,7 +53,16 @@ export function VeloDataProvider(props:{children:JSX.Element}) {
             : "Failed to communicate with backend services."}
     </>
 
-    return <VeloContext.Provider value={{network: network?.network ?? defaultNetwork, selectedStation, setSelectedStation: setSelectedStationHandler, setCenter, center, zoom}}>
+    return <VeloContext.Provider value={{
+        stations: network.network.stations.filter(station => station.name.toLowerCase().includes(filter.toLowerCase())),
+        selectedStation,
+        setSelectedStation:
+        setSelectedStationHandler,
+        setCenter,
+        center,
+        zoom,
+        filter,
+        setFilter}}>
         {props.children}
     </VeloContext.Provider>
 }

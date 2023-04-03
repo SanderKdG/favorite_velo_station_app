@@ -1,4 +1,4 @@
-import {MapContainer, Marker, Popup, TileLayer, useMapEvents} from "react-leaflet";
+import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
 import "./../media/css/map.css"
 import useVeloData from "../hooks/useVeloData";
 import {Icon} from "leaflet"
@@ -18,13 +18,13 @@ const bicycleParkingFavoriteIcon = new Icon({
 })
 
 export default function Map() {
-    const {center, network, zoom} = useVeloData()
+    const {center, stations, zoom} = useVeloData()
 
     return <MapContainer className={"map"} center={center} zoom={zoom} scrollWheelZoom={false} minZoom={13}>
         <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {network.stations
+        {stations
             .map(station => <StationMarker key={station.id} station={station} />)}
     </MapContainer>
 }

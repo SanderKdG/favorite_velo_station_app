@@ -6,3 +6,15 @@
     background-color: rgb(50, 50, 50, 5%);
     cursor: pointer;
 }
+
+.stationsList {
+    height: 400px;
+    overflow-y: auto;
+}
+
+@media only screen and (max-width: 700px) {
+    .stationsList {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
