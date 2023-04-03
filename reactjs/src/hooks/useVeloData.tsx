@@ -66,3 +66,6 @@ export function VeloDataProvider(props:{children:JSX.Element}) {
         {props.children}
     </VeloContext.Provider>
 }
+
+
+//https://react-leaflet.js.org/docs/example-external-state/ To move to a point

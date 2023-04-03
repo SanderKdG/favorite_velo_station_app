@@ -20,7 +20,7 @@ const bicycleParkingFavoriteIcon = new Icon({
 export default function Map() {
     const {center, stations, zoom} = useVeloData()
 
-    return <MapContainer className={"map"} center={center} zoom={zoom} scrollWheelZoom={false} minZoom={13}>
+    return <MapContainer className={"map"} center={center} zoom={zoom} scrollWheelZoom={true} minZoom={13}>
         <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />

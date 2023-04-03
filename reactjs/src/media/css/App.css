@@ -1,5 +1,13 @@
 .App {
   margin: 20px;
+  z-index: 2;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: ghostwhite;
+  padding: 20px;
+  width: 350px;
+  border-radius: 5px;
 }
 
 .flexElements {
