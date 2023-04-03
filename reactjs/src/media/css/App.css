@@ -1,0 +1,12 @@
+.App {
+  margin: 20px;
+}
+
+.flexElements {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.centerElements {
+  justify-content: center;
+}
