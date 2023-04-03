@@ -14,7 +14,7 @@ export default function useVeloData() {
 }
 
 export function VeloDataProvider(props:{children:JSX.Element}) {
-    const {data:network, loading, refresh} = useGetSingle<null|Network>("/network", null)
+    const {data:network, loading, refresh} = useGetSingle<null| { network: Network }>("https://api.citybik.es/v2/networks/velo-antwerpen?fields=stations", null)
     useInterval(refresh, 5000)
     const [selectedStation, setSelectedStation] = useState<number|null>(null)
 
@@ -24,7 +24,7 @@ export function VeloDataProvider(props:{children:JSX.Element}) {
             : "Failed to communicate with backend services."}
     </>*/
 
-    return <VeloContext.Provider value={{network: network ?? defaultNetwork, selectedStation, setSelectedStation}}>
+    return <VeloContext.Provider value={{network: network?.network ?? defaultNetwork, selectedStation, setSelectedStation}}>
         {props.children}
     </VeloContext.Provider>
 }
