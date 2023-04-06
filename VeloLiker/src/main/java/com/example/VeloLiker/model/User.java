@@ -26,6 +26,11 @@ public class User implements UserDetails {
   @Column(nullable = false)
   private String password;
 
+  public User(String email, String password) {
+    this.email = email;
+    this.password = password;
+  }
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return new ArrayList<>();
