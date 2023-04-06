@@ -1,13 +1,15 @@
 import {Button} from "@mui/material";
-import {useState} from "react";
-import LoginDialog from "./LoginDialog";
+import useAuth from "../../hooks/useAuth";
+import {useNavigate} from "react-router-dom";
 
 export default function LoginButton() {
-    const [open, setOpen] = useState(false)
+    const {isAuthorized} = useAuth()
+    const navigate = useNavigate()
+
+    if(isAuthorized) return <></>
 
     return <>
-        <LoginDialog open={open} handleClose={() => setOpen(false)} />
-        <Button color={"success"} onClick={() => setOpen(true)}>
+        <Button color={"success"} onClick={() => navigate("/login")}>
             Login
         </Button>
     </>

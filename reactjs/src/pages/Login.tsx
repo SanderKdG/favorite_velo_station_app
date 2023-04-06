@@ -1,12 +1,12 @@
-import Dialog from "@mui/material/Dialog/Dialog";
-import DialogTitle from "@mui/material/DialogTitle/DialogTitle";
-import {Box, Button, TextField} from "@mui/material";
+import {Box, Button, TextField, Typography} from "@mui/material";
+import {useSnackbar} from "notistack";
+import useAuth from "../hooks/useAuth";
 import {useState} from "react";
-import {useSnackbar} from 'notistack';
 import axios from "axios";
-import useAuth from "../../hooks/useAuth";
+import {useNavigate} from "react-router-dom";
 
-export default function LoginDialog({handleClose, open}:{handleClose:() => void, open:boolean}) {
+export default function Login() {
+    const navigate = useNavigate()
     const {enqueueSnackbar} = useSnackbar()
     const {setToken} = useAuth()
     const [email, setEmail] = useState("")
@@ -17,15 +17,14 @@ export default function LoginDialog({handleClose, open}:{handleClose:() => void,
             const response = await axios.post<string>("http://localhost:8080/auth/login", {email, password})
             setToken(response.data)
             enqueueSnackbar(`Successfully logged in.`, {variant: "success"})
-            handleClose()
+            navigate("/")
         } catch(e) {
             enqueueSnackbar(`${e}`, {variant: "error"})
         }
     }
 
-    return <Dialog onClose={handleClose} open={open}>
-        <DialogTitle>Login</DialogTitle>
-        <Box sx={{m:1}}>
+    return <Box sx={{m: "auto", maxWidth: "400px", p: 10}}>
+            <Typography variant={"h4"}>Login</Typography>
             <TextField margin={"dense"}
                        fullWidth
                        value={email}
@@ -40,7 +39,6 @@ export default function LoginDialog({handleClose, open}:{handleClose:() => void,
                        onChange={(e) => setPassword(e.target.value)}
             />
             <Button onClick={handleClick}>Login</Button>
-            <Button onClick={handleClick} color={"error"}>Close</Button>
-        </Box>
-    </Dialog>
+            <Button onClick={() => navigate("/")} color={"error"}>Go back</Button>
+    </Box>
 }
