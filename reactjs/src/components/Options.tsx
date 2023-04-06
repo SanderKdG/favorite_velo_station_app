@@ -1,9 +1,9 @@
-import {Button} from "@mui/material";
+import LoginButton from "./login/LoginButton";
 
 export default function Options() {
     return <>
         <div className={"flexElements"}>
-            <Button color={"success"}>Login</Button>
+            <LoginButton />
         </div>
     </>
 }

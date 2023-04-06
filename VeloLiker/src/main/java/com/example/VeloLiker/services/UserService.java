@@ -29,6 +29,7 @@ public class UserService {
                                     username, password
                             )
                     );
+            log.info(authenticate.getName());
             var user = (User) authenticate.getPrincipal();
             return Optional.of(jwtTokenUtil.generateToken(user));
         } catch (Exception authenticationException) {
