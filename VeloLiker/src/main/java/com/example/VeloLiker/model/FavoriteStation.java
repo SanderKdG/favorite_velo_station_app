@@ -1,4 +1,4 @@
-package com.example.VeloLiker.domain;
+package com.example.VeloLiker.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
