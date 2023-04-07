@@ -16,9 +16,7 @@ export default function List() {
 }
 
 function StationCard({station}: { station: StationInfo }) {
-    const {setSelectedStation} = useVeloData()
-
-    return <div className={"stationCard"} onClick={() => setSelectedStation(station)}>
+    return <div className={"stationCard"}>
         {station.name}
         <br/>
         <small>Bicycles: {station.free_bikes}, Empty slots: {station.empty_slots}</small>

@@ -14,7 +14,7 @@ export default function Login() {
 
     async function handleClick() {
         try {
-            const response = await axios.post<string>("http://localhost:8080/auth/login", {email, password})
+            const response = await axios.post<string>("/auth/login", {email, password})
             setToken(response.data)
             enqueueSnackbar(`Successfully logged in.`, {variant: "success"})
             navigate("/")
