@@ -1,5 +1,5 @@
 .stationCard {
-    padding: 20px 10px;
+    padding: 10px 5px;
 }
 
 .stationCard:hover {
@@ -8,8 +8,18 @@
 }
 
 .stationsList {
-    height: 400px;
+    height: 100px;
     overflow-y: auto;
+}
+
+@media screen and (min-width: 1000px) {
+    .stationCard {
+        padding: 20px 10px;
+    }
+
+    .stationsList {
+        height: 300px;
+    }
 }
 
 @media only screen and (max-width: 700px) {

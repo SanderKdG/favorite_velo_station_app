@@ -8,12 +8,12 @@ import React from "react";
 export default function Home() {
     return <VeloDataProvider>
         <>
-            <Map/>
             <div className={"App"}>
                 <Typography variant={"h4"}>Velo Stations</Typography>
                 <Options/>
                 <List/>
             </div>
+            <Map/>
         </>
     </VeloDataProvider>
 }
