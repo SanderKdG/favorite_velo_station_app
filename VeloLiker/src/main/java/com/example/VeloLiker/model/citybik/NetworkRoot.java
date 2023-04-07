@@ -5,11 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor @AllArgsConstructor
-@Getter
-@Setter
-public class Extra {
-    public String address;
-    public String status;
-    public int uid;
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
+public class NetworkRoot {
+    private Network network;
 }

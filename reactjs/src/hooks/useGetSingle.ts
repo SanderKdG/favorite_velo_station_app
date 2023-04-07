@@ -28,6 +28,7 @@ export default function useGetSingle<T>(url: string, defaultValue: T) {
     }, [errorMsg])
 
     async function refresh() {
+        console.log("refreshing "+url)
         setIsLoading(true)
         await getData()
         return {loading, "data": fetchedData, refresh, error, errorMsg}

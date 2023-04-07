@@ -1,7 +1,7 @@
-import {Station} from "./Station";
+import {StationInfo} from "./StationInfo";
 
 export interface Network {
-    stations: Station[]
+    stations: StationInfo[]
 }
 
 export const defaultNetwork : Network = {

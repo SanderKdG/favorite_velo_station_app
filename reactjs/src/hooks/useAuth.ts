@@ -10,7 +10,7 @@ export default function useAuth() {
     const {isExpired, decodedToken, reEvaluateToken} = useJwt<JwtUserInfo>(token ?? "")
     useInterval(() => {
         reEvaluateToken(token ?? "")
-    }, 1000)
+    }, 20000)
 
     const isAuthorized = useMemo(() => {
         return decodedToken !== null && !isExpired

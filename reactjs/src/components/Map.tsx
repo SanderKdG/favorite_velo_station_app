@@ -4,8 +4,11 @@ import useVeloData from "../hooks/useVeloData";
 import {Icon} from "leaflet"
 import parkingIcon from "./../media/img/bicycle-parking-icon.png"
 import favoriteParkingIcon from "./../media/img/bicycle-parking-favorite-icon.png"
-import {Station} from "../entities/Station";
 import {Button} from "@mui/material";
+import Station from "../entities/Station";
+import axios from "axios";
+import {useSnackbar} from "notistack";
+import useAuth from "../hooks/useAuth";
 
 const bicycleParkingIcon = new Icon({
     iconUrl: parkingIcon,
@@ -25,22 +28,37 @@ export default function Map() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {stations
-            .map(station => <StationMarker key={station.id} station={station} />)}
+            .map(station => <StationMarker key={station.station.id} station={station} />)}
     </MapContainer>
 }
 
 function StationMarker({station}:{station:Station}) {
-    const isFavorite = station.free_bikes < 5
+    const {refresh} = useVeloData()
+    const {isAuthorized} = useAuth()
+    const {enqueueSnackbar} = useSnackbar()
 
-    return <Marker key={station.id} position={[station.latitude, station.longitude]} icon={isFavorite ? bicycleParkingFavoriteIcon : bicycleParkingIcon}>
+    async function toggleStation() {
+        if(!station.isFavorite) {
+            await axios.post("/station/favorites/add", {stationId: station.station.id})
+            enqueueSnackbar("Successfully added favorite")
+        } else {
+            await axios.delete(`/station/favorites/${station.station.id}`)
+            enqueueSnackbar("Successfully removed favorite")
+        }
+        refresh()
+    }
+
+    return <Marker key={station.station.id} position={[station.station.latitude, station.station.longitude]} icon={station.isFavorite ? bicycleParkingFavoriteIcon : bicycleParkingIcon}>
         <Popup>
-            {station.name}
+            {station.station.name}
             <br/>
-            Free slots: {station.free_bikes}
+            Free slots: {station.station.free_bikes}
             <br />
-            <div className={"flexElements centerElements"}>
-                <Button color={"success"} sx={{mt:1}}>Favorite</Button>
-            </div>
+            {isAuthorized && <div className={"flexElements centerElements"}>
+                <Button color={station.isFavorite ? "error" : "success"} sx={{mt: 1}} onClick={toggleStation}>
+                    {station.isFavorite ? "Remove favorite" : "Favorite"}
+                </Button>
+            </div>}
         </Popup>
     </Marker>
 }

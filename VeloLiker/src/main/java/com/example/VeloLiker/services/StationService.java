@@ -7,8 +7,8 @@ import com.example.VeloLiker.util.StationRestClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @Slf4j
@@ -37,6 +37,13 @@ public class StationService {
     }
 
     public List<Station> getStations() {
-        return Objects.requireNonNull(stationRestClient.getStations().getBody()).stations;
+        var response = stationRestClient.getStations();
+        var body = response.getBody();
+        if(body == null || body.getNetwork() == null) {
+            log.warn("Stations API returned null");
+            log.warn("Http code: "+response.getStatusCode());
+            return new ArrayList<>();
+        }
+        return body.getNetwork().stations;
     }
 }

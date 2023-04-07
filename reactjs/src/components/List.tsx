@@ -1,5 +1,5 @@
 import {TextField} from "@mui/material";
-import {Station} from "../entities/Station";
+import {StationInfo} from "../entities/StationInfo";
 import useVeloData from "../hooks/useVeloData";
 import "./../media/css/stations-list.css"
 
@@ -10,12 +10,12 @@ export default function List() {
         <TextField fullWidth label={"Search"} value={filter} onChange={e => setFilter(e.target.value)} />
         <div className={"stationsList"}>
             {stations
-                .map(station => <StationCard key={station.id} station={station} />)}
+                .map(station => <StationCard key={station.station.id} station={station.station} />)}
         </div>
     </>
 }
 
-function StationCard({station}: { station: Station }) {
+function StationCard({station}: { station: StationInfo }) {
     const {setSelectedStation} = useVeloData()
 
     return <div className={"stationCard"} onClick={() => setSelectedStation(station)}>

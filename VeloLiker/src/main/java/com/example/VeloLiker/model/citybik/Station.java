@@ -1,13 +1,16 @@
 package com.example.VeloLiker.model.citybik;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class Station{
+@Getter @Setter
+public class Station {
     public int empty_slots;
     public Extra extra;
     public int free_bikes;
