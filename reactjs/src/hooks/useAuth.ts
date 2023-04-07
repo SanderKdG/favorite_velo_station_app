@@ -1,26 +1,29 @@
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import JwtUserInfo from "../entities/JwtUserInfo";
 import {useJwt} from "react-jwt";
 import useInterval from "./useInterval";
+import {getAuthToken, saveAuthToken} from "../functions/authStorage";
+import setupHttp from "../functions/setupHttp";
 
-const tokenKey = "velo_token"
 export default function useAuth() {
-    const [token, setToken] = useState<string|null>(localStorage.getItem(tokenKey))
+    const [token, setToken] = useState<string|null>(getAuthToken())
     const {isExpired, decodedToken, reEvaluateToken} = useJwt<JwtUserInfo>(token ?? "")
     useInterval(() => {
-        console.log(decodedToken)
         reEvaluateToken(token ?? "")
     }, 1000)
 
     const isAuthorized = useMemo(() => {
-        console.log(`Is authorized: ${decodedToken !== null && !isExpired}`)
         return decodedToken !== null && !isExpired
     }, [decodedToken, isExpired])
 
+    useEffect(() => {
+        setupHttp()
+    })
+
     function updateToken(value:string|null) {
-        if(value !== null) localStorage.setItem(tokenKey, value)
-        else localStorage.removeItem(tokenKey)
+        saveAuthToken(value)
         setToken(value)
+        setupHttp()
     }
 
     return {
