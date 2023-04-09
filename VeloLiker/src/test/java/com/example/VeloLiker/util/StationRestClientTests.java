@@ -1,10 +1,9 @@
-package com.example.VeloLiker.util.integrated;
+package com.example.VeloLiker.util;
 
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
-import com.example.VeloLiker.util.StationRestClient;
 import java.util.Objects;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
