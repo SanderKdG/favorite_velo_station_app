@@ -18,7 +18,8 @@ export default function useAuth() {
 
     useEffect(() => {
         setupHttp()
-    })
+        if(isExpired) setToken(null)
+    }, [isAuthorized, token, isExpired])
 
     function updateToken(value:string|null) {
         saveAuthToken(value)
