@@ -17,11 +17,11 @@ public class FavoriteStation {
     private Long id;
     @Column(nullable = false)
     private String stationId;
-    @Column(nullable = false)
-    private int userId;
+    @ManyToOne()
+    private User user;
 
-    public FavoriteStation(String stationId, int userId) {
+    public FavoriteStation(String stationId, User user) {
         this.stationId = stationId;
-        this.userId = userId;
+        this.user = user;
     }
 }

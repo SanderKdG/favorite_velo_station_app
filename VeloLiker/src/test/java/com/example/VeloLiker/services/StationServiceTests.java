@@ -6,10 +6,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 import com.example.VeloLiker.model.FavoriteStation;
+import com.example.VeloLiker.model.User;
 import com.example.VeloLiker.model.citybik.Network;
 import com.example.VeloLiker.model.citybik.NetworkRoot;
 import com.example.VeloLiker.model.citybik.Station;
 import com.example.VeloLiker.repositories.FavoriteStationRepository;
+import com.example.VeloLiker.repositories.UserRepository;
 import com.example.VeloLiker.util.StationRestClient;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class StationServiceTests {
   private FavoriteStationRepository favoriteStationRepository;
   @MockBean
   private StationRestClient stationRestClient;
+  @MockBean
+  private UserRepository userRepository;
   @Autowired
   private StationService stationService;
   private NetworkRoot networkRoot;
@@ -52,18 +56,22 @@ public class StationServiceTests {
 
   @Test
   void addFavorite() {
-    given(favoriteStationRepository.save(any())).willReturn(new FavoriteStation(1L, "001", 1));
+    var user = new User(1, "sander.ctin@gmail.com", "");
+    given(favoriteStationRepository.save(any())).willReturn(new FavoriteStation(1L, "001", user));
+    given(userRepository.findById(1)).willReturn(
+        Optional.of(user));
 
     var response = stationService.addFavorite("001", 1);
     assertNotNull(response);
     assertEquals("001", response.getStationId());
     assertEquals(1L, response.getId());
-    assertEquals(1, response.getUserId());
+    assertEquals(user.getId(), response.getUser().getId());
   }
 
   @Test //smoke test
   void removeExistingFavorite() {
-    var fs = new FavoriteStation(1L, "001", 1);
+    var user = new User(1, "sander.ctin@gmail.com", "");
+    var fs = new FavoriteStation(1L, "001", user);
     given(favoriteStationRepository.findByStationIdAndUserId("001", 1)).willReturn(
         Optional.of(fs));
 
