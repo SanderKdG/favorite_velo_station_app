@@ -1,5 +1,5 @@
 FROM gradle:jdk18-alpine AS build
-COPY ./gamebackend /buildFiles
+COPY ./VeloLiker /buildFiles
 WORKDIR /buildFiles
 RUN gradle build --no-daemon -x test
 
