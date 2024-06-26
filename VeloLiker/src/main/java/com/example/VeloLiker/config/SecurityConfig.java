@@ -71,6 +71,8 @@ public class SecurityConfig {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("https://localhost:3000");
+        config.addAllowedOrigin("http://red-cliff-07ce3fe1e.5.azurestaticapps.net");
+        config.addAllowedOrigin("https://red-cliff-07ce3fe1e.5.azurestaticapps.net");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
